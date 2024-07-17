@@ -6137,9 +6137,7 @@ void woal_flush_evt_queue(moal_handle *handle)
 	spin_lock_irqsave(&handle->evt_lock, flags);
 	list_for_each_entry_safe (evt, tmp_node, &handle->evt_queue, link) {
 		list_del(&evt->link);
-		spin_unlock_irqrestore(&handle->evt_lock, flags);
 		kfree(evt);
-		spin_lock_irqsave(&handle->evt_lock, flags);
 	}
 	INIT_LIST_HEAD(&handle->evt_queue);
 	spin_unlock_irqrestore(&handle->evt_lock, flags);
