@@ -1912,7 +1912,7 @@ int woal_cfg80211_set_pmksa(struct wiphy *wiphy, struct net_device *dev,
 	if (!entry) {
 		entry = kzalloc(sizeof(struct pmksa_entry), GFP_ATOMIC);
 		if (!entry) {
-			PRINTM(MERROR, "Fail to allocate pmksa entry\n");
+			WARN_ONCE(1, "CALVIN: PMKSA atomic alloc failed\n");
 			goto done;
 		}
 		INIT_LIST_HEAD(&entry->link);
@@ -1925,6 +1925,7 @@ int woal_cfg80211_set_pmksa(struct wiphy *wiphy, struct net_device *dev,
 		spin_unlock_irqrestore(&priv->pmksa_list_lock, flags);
 	} else {
 		/** pmkid is differnt from previous value? */
+		WARN_ONCE(1, "CALVIN: Duplicate PMKID is likely not valid\n");
 		memset(entry->pmkid, 0, PMKID_LEN);
 		moal_memcpy_ext(priv->phandle, entry->pmkid, pmksa->pmkid,
 				PMKID_LEN, PMKID_LEN);

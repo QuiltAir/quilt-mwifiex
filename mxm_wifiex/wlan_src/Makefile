@@ -75,8 +75,8 @@ CONFIG_UAP_SUPPORT=y
 CONFIG_WIFI_DIRECT_SUPPORT=y
 
 
-# Re-association in driver
-CONFIG_REASSOCIATION=y
+# Re-association in driver (disabled)
+CONFIG_REASSOCIATION=n
 
 
 # Manufacturing firmware support
@@ -130,7 +130,6 @@ ifeq ($(CONFIG_IMX_SUPPORT),y)
 ccflags-y += -DIMX_SUPPORT
 ifneq ($(ANDROID_PRODUCT_OUT),)
 ccflags-y += -DIMX_ANDROID
-ccflags-y += -Wno-implicit-fallthrough
 CONFIG_ANDROID_KERNEL=y
 endif
 endif
@@ -361,7 +360,6 @@ ifeq ($(GCC_VERSION),1)
 endif
 WimpGCC_VERSION := $(shell echo `gcc -dumpversion | cut -f1 -d.`| bc )
 ifeq ($(shell test $(WimpGCC_VERSION) -ge 7; echo $$?),0)
-ccflags-y += -Wimplicit-fallthrough=3
 endif
 #ccflags-y += -Wunused-but-set-variable
 #ccflags-y += -Wmissing-prototypes
