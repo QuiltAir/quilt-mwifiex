@@ -4609,6 +4609,9 @@ static INLINE mlan_private *wlan_get_priv_by_id(mlan_adapter *pmadapter,
 
 	for (i = 0; i < MIN(pmadapter->priv_num, MLAN_MAX_BSS_NUM); i++) {
 		if (pmadapter->priv[i]) {
+			if (pmadapter->priv[i]->bss_mode == MLAN_BSS_MODE_AUTO)
+				continue;
+
 			if ((pmadapter->priv[i]->bss_num == bss_num) &&
 			    (pmadapter->priv[i]->bss_type == bss_type))
 				return pmadapter->priv[i];
